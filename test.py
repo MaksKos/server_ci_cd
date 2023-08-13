@@ -9,9 +9,11 @@ from unittest import TestCase, mock
 
 import server
 
-HOST = 'localhost'    # The remote host
-PORT = 8080       # The same port as used by the server
+HOST = '127.0.0.1'    # The remote host
+PORT = 5000       # The same port as used by the server
 
+server.HOST = HOST
+server.PORT = PORT
 
 class TestServer(TestCase):
 
@@ -47,7 +49,7 @@ class TestServer(TestCase):
         master.start()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.connect((server.HOST, server.PORT))
+            sock.connect((HOST, PORT))
         master._is_run = False
         master.join()
         self.assertTrue(isinstance(que.get(), socket.socket))
@@ -73,7 +75,7 @@ class TestServer(TestCase):
         worker.start()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.connect((server.HOST, server.PORT))
+            sock.connect((HOST, PORT))
             for url in urls:
                 sock.sendall(url.encode())
                 data = sock.recv(4096)

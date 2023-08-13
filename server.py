@@ -9,8 +9,8 @@ import json
 import collections
 import requests
 
-HOST = 'localhost'
-PORT = 8080
+HOST = '127.0.0.1'
+PORT = 3000
 SIZE = 4096
 REDIRECT = True
 
