@@ -45,7 +45,6 @@ class TestServer(TestCase):
     def test_master(self):
         que = queue.Queue()
         master = server.Master(que)
-        print(server.PORT)
         master.setDaemon(True)
         master.start()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
