@@ -9,7 +9,7 @@ from unittest import TestCase, mock
 
 import server
 
-HOST = '127.0.0.1'    # The remote host
+HOST = 'localhost'    # The remote host
 server.HOST = HOST
 
 class TestServer(TestCase):
@@ -38,10 +38,8 @@ class TestServer(TestCase):
         self.assertEqual(mock_mast().start.call_count, 1)
         self.assertEqual(mock_work().join.call_count, self.n_work)
         self.assertEqual(mock_mast().join.call_count, 1)
-        print('finish 1')
 
     def test_master(self):
-        print('finish 2')
         server.PORT = 6000
         que = queue.Queue()
         master = server.Master(que)
@@ -56,7 +54,7 @@ class TestServer(TestCase):
 
     @mock.patch('server.requests')
     def test_worker(self, req):
-        print('finish 3')
+
         server.PORT = 5000
 
         Text = collections.namedtuple('Text', 'text')
