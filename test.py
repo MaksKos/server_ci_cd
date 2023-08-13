@@ -10,10 +10,7 @@ from unittest import TestCase, mock
 import server
 
 HOST = '127.0.0.1'    # The remote host
-PORT = 5000       # The same port as used by the server
-
 server.HOST = HOST
-server.PORT = PORT
 
 class TestServer(TestCase):
 
@@ -44,20 +41,23 @@ class TestServer(TestCase):
         print('finish 1')
 
     def test_master(self):
+        print('finish 2')
+        server.PORT = 6000
         que = queue.Queue()
         master = server.Master(que)
         master.setDaemon(True)
         master.start()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.connect((HOST, PORT))
+            sock.connect((HOST, server.PORT))
         master._is_run = False
         master.join()
         self.assertTrue(isinstance(que.get(), socket.socket))
-        print('finish 2')
 
     @mock.patch('server.requests')
     def test_worker(self, req):
+        print('finish 3')
+        server.PORT = 5000
 
         Text = collections.namedtuple('Text', 'text')
 
@@ -77,7 +77,7 @@ class TestServer(TestCase):
         worker.start()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.connect((HOST, PORT))
+            sock.connect((HOST, server.PORT))
             for url in urls:
                 sock.sendall(url.encode())
                 data = sock.recv(4096)
@@ -96,4 +96,3 @@ class TestServer(TestCase):
                          [mock.call(urls[0], allow_redirects=server.REDIRECT),
                           mock.call(urls[1], allow_redirects=server.REDIRECT)]
                          )
-        print('finish 3')
