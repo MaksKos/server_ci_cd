@@ -17,10 +17,7 @@ jobs:
 #            - name: Install requests
 #              run: pip install requests
             - name: Test main
-              run: python3 -m unittest test.TestServer.test_main
-            - name: Test master
-              run: python3 -m unittest test.TestServer.test_master
-            - name: Test worker
-              run: python3 -m unittest test.TestServer.test_worker
+              run: python3 -m unittest test.py
+
 
               
