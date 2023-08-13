@@ -12,6 +12,7 @@ import requests
 HOST = 'localhost'
 PORT = 8080
 SIZE = 4096
+REDIRECT = True
 
 
 class Worker(threading.Thread):
@@ -26,7 +27,7 @@ class Worker(threading.Thread):
         super().__init__()
 
     def url_stat(self, url):
-        req = requests.get(url, allow_redirects=False).text
+        req = requests.get(url, allow_redirects=REDIRECT).text
         text = re.sub('<[^>]*>', '', req).split()
         count = collections.Counter(text)
         to_json = dict(count.most_common(self.size))
@@ -41,17 +42,18 @@ class Worker(threading.Thread):
                         data = sock.recv(4096)
                         if data:
                             try:
-                                res = self.url_stat(data.decode())
+                                url = data.decode()
+                                res = self.url_stat(url)
                             except requests.exceptions.RequestException as req_err: 
                                 print(req_err)
-                                sock.sendall("URL errro".encode())
+                                sock.sendall("URL errro\n".encode())
                                 continue
 
                             sock.sendall(res.encode())
 
                             self.lock.acquire()
                             self.__class__.count += 1
-                            print(f'{self.count} urls have done')
+                            print(f'{self.count} urls have done: {url}')
                             self.lock.release()
                         else:
                             self.que.task_done()

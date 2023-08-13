@@ -130,3 +130,6 @@ dmypy.json
 .pyre/
 
 #local
+client.py
+urls_test.txt
+.vscode/
