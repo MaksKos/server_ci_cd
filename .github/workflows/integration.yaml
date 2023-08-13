@@ -13,4 +13,4 @@ jobs:
             - name: Display Python version
               run: python -c "import sys; print(sys.version)"
             - name: Test
-              run: python3 -m unittest test.TestServer.test_main
+              run: python3 -m unittest test.TestServer.test_master
