@@ -41,6 +41,7 @@ class TestServer(TestCase):
         self.assertEqual(mock_mast().start.call_count, 1)
         self.assertEqual(mock_work().join.call_count, self.n_work)
         self.assertEqual(mock_mast().join.call_count, 1)
+        print('finish 1')
 
     def test_master(self):
         que = queue.Queue()
@@ -53,6 +54,7 @@ class TestServer(TestCase):
         master._is_run = False
         master.join()
         self.assertTrue(isinstance(que.get(), socket.socket))
+        print('finish 2')
 
     @mock.patch('server.requests')
     def test_worker(self, req):
@@ -64,7 +66,7 @@ class TestServer(TestCase):
         urls = ['url1', 'url2']
 
         answer = []
-
+        # make a simple client
         lock = threading.Lock()
         que = queue.Queue()
         master = server.Master(que)
@@ -94,3 +96,4 @@ class TestServer(TestCase):
                          [mock.call(urls[0], allow_redirects=server.REDIRECT),
                           mock.call(urls[1], allow_redirects=server.REDIRECT)]
                          )
+        print('finish 3')

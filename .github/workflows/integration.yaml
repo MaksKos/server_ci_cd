@@ -14,9 +14,6 @@ jobs:
                 python-version: 3.11
             - name: Display Python version
               run: python -c "import sys; print(sys.version)"
+            
             - name: Test 1
-              run: python3 -m unittest test.TestServer.test_main
-            - name: Test 2
-              run: python3 -m unittest test.TestServer.test_master
-            - name: Test 3
-              run: python3 -m unittest test.TestServer.test_worker
+              run: python3 -m unittest test.py
