@@ -1,10 +1,10 @@
 # pylint: disable=missing-docstring
 
-import collections
-import threading
-import socket
-import queue
-from io import StringIO
+# import collections
+# import threading
+# import socket
+# import queue
+# from io import StringIO
 from unittest import TestCase, mock
 
 import server
@@ -23,7 +23,7 @@ class TestServer(TestCase):
     @mock.patch('server.queue')
     @mock.patch('server.threading.Lock')
     def test_main(self,  mock_threads: mock, mock_que, mock_work, mock_mast):
-        
+
         server.main(self.n_work, self.n_top)
         self.assertEqual(mock_work.call_count, self.n_work)
         self.assertEqual(mock_mast.call_count, 1)

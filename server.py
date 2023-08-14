@@ -1,4 +1,4 @@
-# pylint: disable=missing-docstring
+# pylint: disable=missing-docstring, unused-variable
 
 import socket
 import argparse
@@ -44,7 +44,7 @@ class Worker(threading.Thread):
                             try:
                                 url = data.decode()
                                 res = self.url_stat(url)
-                            except requests.exceptions.RequestException as req_err: 
+                            except requests.exceptions.RequestException as req_err:
                                 print(req_err)
                                 sock.sendall("URL errro\n".encode())
                                 continue
@@ -58,7 +58,7 @@ class Worker(threading.Thread):
                         else:
                             self.que.task_done()
                             break
-                        
+
                 except socket.error as error:
                     print(error.strerror)
                     continue
