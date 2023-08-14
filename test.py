@@ -12,6 +12,7 @@ import server
 HOST = 'localhost'    # The remote host
 server.HOST = HOST
 
+
 class TestServer(TestCase):
 
     def setUp(self) -> None:

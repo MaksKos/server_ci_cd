@@ -27,7 +27,7 @@ class Worker(threading.Thread):
         super().__init__()
 
     def url_stat(self, url):
-        req = requests.get(url, allow_redirects=REDIRECT).text
+        req = requests.get(url, timeout=60, allow_redirects=REDIRECT).text
         text = re.sub('<[^>]*>', '', req).split()
         count = collections.Counter(text)
         to_json = dict(count.most_common(self.size))
