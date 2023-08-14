@@ -32,10 +32,10 @@ jobs:
                 python3 -m coverage html
             
             - name: Upload artifacts
-                uses: actions/upload-artifact@v3
-                with:
-                  name: coverage
-                  path: htmlcov
+              uses: actions/upload-artifact@v3
+              with:
+                name: coverage
+                path: htmlcov
 
       
       
