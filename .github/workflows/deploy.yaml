@@ -1,0 +1,22 @@
+name: Deploy Server
+
+on:
+  pull_request:
+    types:
+      - closed
+
+      
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run:
+
+      
+      
+
+        
+
+
+              
