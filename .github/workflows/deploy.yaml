@@ -1,31 +1,42 @@
-name: Deploy Server
+name: Server Deployment
 
 on:
-  pull_request:
-    types:
-      - closed
-     
+  push:
+    branches:
+      - main
+
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps: 
-    - uses: actions/checkout@v3
-    - name: Login
-      uses: docker/login-action@v2
-      with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}   
-    - name: Build image
-      run:  docker build .
-            --file Dockerfile
-            --tag ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
-    - name: Push image to Docker Hub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+    docker_hub:
+        name: Build Docker Image
+        runs-on: ubuntu-latest
+        steps: 
+            - uses: actions/checkout@v3
+            - name: Login
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}   
+            - name: Build image
+              run:  docker build .
+                    --file Dockerfile
+                    --tag ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+            - name: Push image to Docker Hub
+              run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+            - run: echo ${{ github.sha }}
 
-      
-      
-
-        
-
-
-              
+    deploy:
+        name: Deploy server
+        needs: [docker_hub]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Deploy on VPS
+              uses: appleboy/ssh-action@master
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                password: ${{ secrets.SSH_PASS }}
+                script: | 
+                    docker pull ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+                    docker stop python_server
+                    docker run  --name python_server -p 3000:3000 -d --rm ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
