@@ -42,6 +42,8 @@ jobs:
         name: Build Docker Image
         needs: [test]
         runs-on: ubuntu-latest
+        env:
+            IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
         steps: 
             - uses: actions/checkout@v3
             - name: Login
@@ -49,15 +51,13 @@ jobs:
               with:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}   
-            - env:
-                IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
             - name: Build image
               run:  docker build .
                     --file Dockerfile
                     --tag ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
             - name: Push image to Docker Hub
               run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
-#            - run: echo ${{ github.sha }}
+            - run: echo ${{ github.sha }}
 
     # deploy:
     #     name: Build Docker Image
