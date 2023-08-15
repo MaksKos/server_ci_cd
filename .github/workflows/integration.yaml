@@ -44,11 +44,3 @@ jobs:
               with:
                 name: coverage
                 path: htmlcov
-
-      
-      
-
-        
-
-
-              
