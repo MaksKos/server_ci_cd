@@ -89,7 +89,7 @@ class Master(threading.Thread):
 def main(workers: int, n_top: int):
     que = queue.Queue()
     lock = threading.Lock()
-    threads = [Worker(que, n_top, lock) for _ in range(workers-1)]
+    threads = [Worker(que, n_top, lock) for _ in range(workers)]
     threads.append(Master(que))
     for thread in threads:
         thread.start()
