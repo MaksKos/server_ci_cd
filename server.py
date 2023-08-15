@@ -43,7 +43,7 @@ class Worker(threading.Thread):
                         if data:
                             try:
                                 url = data.decode()
-                                res = "Result: " + self.url_stat(url)
+                                res = "Res: " + self.url_stat(url)
                             except requests.exceptions.RequestException as req_err:
                                 # print(req_err)
                                 sock.sendall(f"URL errro\n {req_err}".encode())
