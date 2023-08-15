@@ -69,12 +69,11 @@ jobs:
                 host: ${{ secrets.SSH_HOST }}
                 username: ${{ secrets.SSH_USER }}
                 password: ${{ secrets.SSH_PASS }}
-                script: echo 'hello world'
-                    # docker pull ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }} &&
-                    # docker stop python_server &&
-                    # docker run  --name python_server 
-                    #             -p 3000:3000 
-                    #             -d --rm
-                    #             ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+                script: |
+#                    docker pull ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }} &&
+                    docker pull imakskos/simple_server:c818becb0e794848e8a854745b92f7bdf872c1e5
+                    docker stop python_server
+#                    docker run  --name python_server -p 3000:3000 -d --rm ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
+                    docker run  --name python_server -p 3000:3000 -d --rm imakskos/simple_server:c818becb0e794848e8a854745b92f7bdf872c1e5
 
     
