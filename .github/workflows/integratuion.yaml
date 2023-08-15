@@ -38,7 +38,7 @@ jobs:
                 name: coverage
                 path: htmlcov
 
-    dokcer_hub:
+    docker_hub:
         name: Build Docker Image
         needs: [test]
         runs-on: ubuntu-latest
