@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - 'dev'
+    paths-ignore:
+      - '.github/workflows/*'
+      - '.gitignore'
+      - '.gitignore'
 
 jobs:
     test:
