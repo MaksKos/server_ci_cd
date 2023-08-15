@@ -9,7 +9,7 @@ import json
 import collections
 import requests
 
-HOST = '127.0.0.1'
+HOST = '0.0.0.0'
 PORT = 3000
 SIZE = 4096
 REDIRECT = True
@@ -43,9 +43,9 @@ class Worker(threading.Thread):
                         if data:
                             try:
                                 url = data.decode()
-                                res = self.url_stat(url)
+                                res = "Result: " + self.url_stat(url)
                             except requests.exceptions.RequestException as req_err:
-                                print(req_err)
+                                #print(req_err)
                                 sock.sendall("URL errro\n".encode())
                                 continue
 
@@ -53,7 +53,7 @@ class Worker(threading.Thread):
 
                             self.lock.acquire()
                             self.__class__.count += 1
-                            print(f'{self.count} urls have done: {url}')
+                            #print(f'{self.count} urls have done: {url}')
                             self.lock.release()
                         else:
                             self.que.task_done()
