@@ -63,7 +63,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - name: deploy on VPS
+            - name: Deploy on VPS
               uses: appleboy/ssh-action@master
               with:
                 host: ${{ secrets.SSH_HOST }}
