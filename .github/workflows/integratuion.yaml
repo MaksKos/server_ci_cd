@@ -1,4 +1,4 @@
-name: Server tests
+name: Server Deployment
 
 on:  workflow_dispatch
 
