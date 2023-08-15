@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    path-ignore:
+      - '.github/workflows/*'
 
 jobs:
     docker_hub:
