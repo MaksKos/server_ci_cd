@@ -69,8 +69,9 @@ jobs:
                 host: ${{ secrets.SSH_HOST }}
                 username: ${{ secrets.SSH_USER }}
                 password: ${{ secrets.SSH_PASS }}
-                script: docker pull imakskos/simple_server:c818becb0e794848e8a854745b92f7bdf872c1e5
-                        docker stop python_server
+                script: | 
+                    docker pull imakskos/simple_server:c818becb0e794848e8a854745b92f7bdf872c1e5
+#                        docker stop python_server
 # #                    docker pull ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }} &&
 #                   docker pull imakskos/simple_server:c818becb0e794848e8a854745b92f7bdf872c1e5
 #                   docker stop python_server
