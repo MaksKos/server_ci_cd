@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 name: Server tests
 
 on:
@@ -53,5 +52,3 @@ jobs:
 
 
               
-=======
->>>>>>> main
