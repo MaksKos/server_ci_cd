@@ -56,7 +56,7 @@ on:  push
 #             - name: Push image to Docker Hub
 #               run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/simple_server:${{ github.sha }}
 #             - run: echo ${{ github.sha }}
-
+jobs:
     deploy:
         name: Deploy server
         #needs: [docker_hub]
