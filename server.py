@@ -45,15 +45,15 @@ class Worker(threading.Thread):
                                 url = data.decode()
                                 res = "Result: " + self.url_stat(url)
                             except requests.exceptions.RequestException as req_err:
-                                #print(req_err)
-                                sock.sendall("URL errro\n".encode())
+                                # print(req_err)
+                                sock.sendall(f"URL errro\n {req_err}".encode())
                                 continue
 
                             sock.sendall(res.encode())
 
                             self.lock.acquire()
                             self.__class__.count += 1
-                            #print(f'{self.count} urls have done: {url}')
+                            # print(f'{self.count} urls have done: {url}')
                             self.lock.release()
                         else:
                             self.que.task_done()
